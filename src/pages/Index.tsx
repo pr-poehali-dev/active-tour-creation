@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import Icon from '@/components/ui/icon';
+import BookingDialog from '@/components/BookingDialog';
 
 interface Tour {
   id: number;
@@ -144,14 +145,16 @@ const Index = () => {
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto font-light">
             Активный отдых по самым красивым уголкам России
           </p>
-          <Button size="lg" className="text-lg px-8 py-6 animate-scale-in">
+          <Button size="lg" className="text-lg px-8 py-6 animate-scale-in" onClick={() => {
+            document.getElementById('tours-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}>
             Подобрать тур
             <Icon name="ArrowDown" className="ml-2" size={20} />
           </Button>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-16">
+      <section id="tours-section" className="container mx-auto px-4 py-16">
         <div className="mb-12">
           <h2 className="text-4xl font-bold mb-4">Найдите свое приключение</h2>
           <p className="text-muted-foreground text-lg">
@@ -326,10 +329,16 @@ const Index = () => {
                       {tour.price.toLocaleString()} ₽
                     </p>
                   </div>
-                  <Button size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground">
-                    Подробнее
-                    <Icon name="ArrowRight" className="ml-2" size={16} />
-                  </Button>
+                  <BookingDialog
+                    tourTitle={tour.title}
+                    tourPrice={tour.price}
+                    tourDuration={tour.duration}
+                  >
+                    <Button size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground">
+                      Забронировать
+                      <Icon name="CalendarCheck" className="ml-2" size={16} />
+                    </Button>
+                  </BookingDialog>
                 </div>
               </div>
             </Card>
